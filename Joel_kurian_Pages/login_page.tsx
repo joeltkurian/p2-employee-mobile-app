@@ -1,5 +1,5 @@
-import { Button, ImageBackground, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { backgroundContinental, textColor } from "../styling";
+import { ImageBackground, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { backgroundCOLOR, backgroundContinental, textColor } from "../styling";
 
 const styles = StyleSheet.create({
     image: {
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     },
     loginContainer: {
         alignItems: 'center',
-        backgroundColor: "rgba(255, 250, 250, 0.1)",
+        backgroundColor: backgroundCOLOR,
         borderColor: 'rgba(255, 250, 250, 0.35)',
         borderWidth: 1,
         borderRadius: 10,
@@ -23,8 +23,10 @@ const styles = StyleSheet.create({
         paddingRight: 15,
     },
     username: {
-        backgroundColor: 'rgba(255, 250, 250, 0.65)',
+        backgroundColor: 'rgba(255, 240, 200, 0.75)',
         borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'rgba(255, 200, 50, 0.9)',
         padding: 5,
         fontSize: 20,
         alignItems: 'center',
@@ -32,8 +34,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     password: {
-        backgroundColor: 'rgba(255, 250, 250, 0.65)',
+        backgroundColor: 'rgba(255, 240, 200, 0.75)',
         borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'rgba(255, 200, 50, 0.9)',
         padding: 5,
         fontSize: 20,
         shadowOffset: { width: 0, height: 1 },
@@ -83,7 +87,7 @@ export default function Login() {
                     {
                         backgroundColor: pressed
                             ? 'rgba(200,150,20,0.4)'
-                            : 'rgba(255, 200, 50, 0.7)'
+                            : 'rgba(255, 200, 50, 0.9)'
 
                     },
                     styles.LoginBTN
