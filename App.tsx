@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Login from './Joel_kurian_Pages/login_page';
+import Login from './components/login_page';
 
 
 export default function App() {
