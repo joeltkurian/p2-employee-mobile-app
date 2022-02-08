@@ -10,8 +10,8 @@ buttonA:{
     paddingHorizontal: 15,
     borderRadius: 5,
     borderWidth: 5,
-    borderColor: '#1B9AAA',
-    backgroundColor: '#1B9AAA',
+    borderColor: '#B68602',
+    backgroundColor: '#FCBA04',
 },
 
 buttonB:{
@@ -22,8 +22,8 @@ buttonB:{
     paddingHorizontal: 15,
     borderRadius: 5,
     borderWidth: 5,
-    borderColor: '#1B9AAA',
-    backgroundColor: '#1B9AAA',
+    borderColor: '#B68602',
+    backgroundColor: '#FCBA04',
 },
 
 buttonC:{
@@ -34,8 +34,8 @@ buttonC:{
     paddingHorizontal: 15,
     borderRadius: 5,
     borderWidth: 5,
-    borderColor: '#1B9AAA',
-    backgroundColor: '#1B9AAA',
+    borderColor: '#B68602',
+    backgroundColor: '#FCBA04',
 },
 
 buttonText:{
@@ -50,26 +50,26 @@ buttonDiv:{
 },
 
 view:{
-    backgroundColor: '#0E0F19',
+    backgroundColor: '#000000',
     height: '100%',
 },
 
 h1:{
     fontSize: 35,
     fontStyle: 'italic',
-    color: '#FFF8F0',
+    color: '#FCBA04',
     
 },
 
 input:{
-    backgroundColor: '#1B9AAA',
+    backgroundColor: '#FCF7F8',
     padding: 10,
     fontSize: 20,
     alignItems: 'center',
 },
 
 inputDesc:{
-    backgroundColor: '#1B9AAA',
+    backgroundColor: '#FCF7F8',
     padding: 10,
     fontSize: 20,
     alignItems: 'center',
@@ -79,8 +79,8 @@ inputDesc:{
 picker:{
     padding: 10,
     fontSize: 30,
-    backgroundColor: '#1B9AAA',
-    color: '#FFF8F0',
+    backgroundColor: '#FCF7F8',
+    color: '#000000',
 },
 
 table:{

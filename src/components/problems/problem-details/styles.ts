@@ -14,18 +14,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#FCBA04',
     },
     
-    buttonB:{
-        marginTop: 35,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 5,
-        paddingHorizontal: 15,
-        borderRadius: 5,
-        borderWidth: 5,
-        borderColor: '#B68602',
-        backgroundColor: '#FCBA04',
-    },
-    
     buttonC:{
         alignItems: 'center',
         justifyContent: 'center',
@@ -50,11 +38,9 @@ const styles = StyleSheet.create({
     },
 
     display:{
-        
         margin: '5%',
         marginBottom: '5%',
         marginTop: '5%',
-
     },
 
     tHead:{
@@ -81,7 +67,7 @@ const styles = StyleSheet.create({
         width: 250,        
     },
 
-    local:{
+    status:{
         flexDirection: 'row',
         marginBottom: '5%',
         marginTop: '5%',
@@ -105,7 +91,7 @@ const styles = StyleSheet.create({
         color: '#FCF7F8',
     },
 
-    times:{
+    submittedTime:{
         alignContent: 'space-between',
     },
 

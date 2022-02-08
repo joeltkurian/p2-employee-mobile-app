@@ -1,5 +1,5 @@
-import { dummyData } from '../dummy-data/dummy'
-import { dummyLocation } from '../dummy-data/dummy'
+import { dummyData } from '../../dummy-data/dummy'
+import { dummyLocation } from '../../dummy-data/dummy'
 import { Pressable, View, Text, Image } from "react-native"
 import { TextInput } from 'react-native-gesture-handler'
 import { Picker } from '@react-native-picker/picker'

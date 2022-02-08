@@ -2,7 +2,7 @@ import { Card } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { TextInput, View, Text, Pressable, ScrollView } from "react-native";
 import { Activity } from '../../../../dtos'
-import { dummyData } from '../dummy-data/dummy'
+import { dummyData } from '../../dummy-data/dummy'
 import styles from './styles';
 
 interface ActivityProps{

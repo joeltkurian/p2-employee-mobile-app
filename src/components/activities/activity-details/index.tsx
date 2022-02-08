@@ -1,5 +1,5 @@
 import { Pressable, View, Text, Image } from "react-native"
-import { dummyLocation } from "../dummy-data/dummy";
+import { dummyLocation } from "../../dummy-data/dummy";
 import styles from './styles';
 
 
@@ -38,7 +38,7 @@ export default function ActivityDetails(){
             <Image style={styles.image} source={{uri:dummyLocation.find(location => location.value == 5)?.imageLink}}/>
             
             <View style={styles.local}>
-                <Text style={styles.h4}>
+                <Text style={styles.h2}>
                     Location : {dummyLocation.find(location => location.value == 5)?.label}
                 </Text>
             </View>            
