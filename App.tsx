@@ -1,7 +1,14 @@
-import { StyleSheet, View } from 'react-native';
+
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import ActivitiesList from './src/components/activities/activities-list';
+import ActivityDetails from './src/components/activities/activity-details';
+import CreateActivity from './src/components/activities/create-activity';
+import ComplaintsList from './src/components/complaints/complaints-list';
+import ComplaintsDetails from './src/components/complaints/complaints-details';
+import { Employee } from './dtos';
 import Login from './components/login_page';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Employee } from './dtos';
 import { useEffect, useState } from 'react';
 import { userContext } from './userContext';
 import HomePage from './components/homepage';
@@ -41,3 +48,4 @@ const styles = StyleSheet.create({
 const account: Employee = {
   id: NaN, isManager: false, fname: '', lname: '', username: '', password: ''
 };
+
