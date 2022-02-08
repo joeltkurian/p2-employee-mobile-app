@@ -48,3 +48,5 @@ export interface WorkLog {
     type: "CHEKIN" | "CHECKOUT",
     timestamp: number
 }
+
+export const pages = { clock: 'Clock in/Out', activity: 'Activites', room: 'Room Services' };
