@@ -1,24 +1,25 @@
-import { Pressable, View, Text, Image } from "react-native"
+import { Pressable, View, Text, Image } from "react-native";
+import { Problem } from '../../../../dtos';
 import styles from './styles';
 
 interface ProblemsProps{
 
 }
 
-export default function ProblemDetails(props: ProblemsProps){
+export default function ComplaintsDetails(props: ProblemsProps){
 
     function changeStatus(){
 
     }
 
-    function problemList(){
+    function complaintsList(){
 
     }
     
     return(
     <View style={styles.background}>
         <View style={styles.buttonDiv}>
-            <Pressable onPress={()=>{}} style={styles.buttonA}><Text style={styles.buttonText}>All Problems</Text></Pressable>
+            <Pressable onPress={()=>{}} style={styles.buttonA}><Text style={styles.buttonText}>All Complaints</Text></Pressable>
         </View>
 
         <View style={styles.display}>

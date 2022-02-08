@@ -3,15 +3,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import ActivitiesList from './src/components/activities/activities-list';
 import ActivityDetails from './src/components/activities/activity-details';
 import CreateActivity from './src/components/activities/create-activity';
-import ProblemsList from './src/components/problems/problem-list';
-import ProblemDetails from './src/components/problems/problem-details';
+import ComplaintsList from './src/components/complaints/complaints-list';
+import ComplaintsDetails from './src/components/complaints/complaints-details';
 
 export default function App() {
   return (
     //<CreateActivity/>
-    //<ActivitiesList/>
+    <ActivitiesList/>
     //<ActivityDetails/>
-    //<ProblemsList/>
-    <ProblemDetails/>
+    //<ComplaintsList/>
+    //<ComplaintsDetails/>
   );
 }

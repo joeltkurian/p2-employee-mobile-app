@@ -2,14 +2,14 @@ import { Card } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { View, Text, Pressable } from "react-native";
 import { Problem } from '../../../../dtos'
-import { dummyProblems } from '../../dummy-data/dummy'
+import { dummyComplaints } from '../../dummy-data/dummy'
 import styles from './styles';
 
 interface ProblemsProps{
 
 }
 
-export default function ProblemsList(props: ProblemsProps){
+export default function ComplaintsList(props: ProblemsProps){
 
 
     function handleSeeMore(){
@@ -17,7 +17,7 @@ export default function ProblemsList(props: ProblemsProps){
     }
 
 
-    const problemsCard = (params: any) => {
+    const complaintsCard = (params: any) => {
     return(
         <Pressable onPress={()=>{}}>
             
@@ -44,11 +44,11 @@ export default function ProblemsList(props: ProblemsProps){
     <View style={styles.view}>
 
         <View style={styles.buttonDiv}>
-            <Pressable onPress={()=>{}} style={styles.buttonA}><Text style={styles.buttonText}>All Problems</Text></Pressable>
+            <Pressable onPress={()=>{}} style={styles.buttonA}><Text style={styles.buttonText}>All Complaints</Text></Pressable>
         </View>
 
         <View>
-            <FlatList data={dummyProblems} renderItem={problemsCard}/>
+            <FlatList data={dummyComplaints} renderItem={complaintsCard}/>
         </View>
 
     </View>
