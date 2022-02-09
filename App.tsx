@@ -5,6 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { userContext } from './userContext';
 import HomePage from './components/homepage';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 
 export default function App() {
@@ -19,14 +21,16 @@ export default function App() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      {user.username === '' ?
-        <Login setUser={setUser} /> :
-        <userContext.Provider value={{ user: user, setUser }}>
-          <HomePage />
-        </userContext.Provider>
-      }
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        {user.username === '' ?
+          <Login setUser={setUser} /> :
+          <userContext.Provider value={{ user: user, setUser }}>
+            <HomePage />
+          </userContext.Provider>
+        }
+      </View>
+    </Provider>
   );
 }
 

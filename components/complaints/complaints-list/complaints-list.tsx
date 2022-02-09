@@ -16,7 +16,7 @@ export default function ComplaintsList(props: ProblemsProps) {
 
     const complaintsCard = (params: any) => {
         return (
-            <Pressable onPress={() => { }}>
+            <Pressable onPress={() => {}}>
                 <Card containerStyle={styles.card}>
                     <View style={styles.infoReservationView}>
                         <Text style={styles.infoReservation}>
