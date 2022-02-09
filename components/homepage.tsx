@@ -3,46 +3,65 @@ import { View, ImageBackground, StyleSheet, Text, Pressable } from "react-native
 import { pages } from "../dtos";
 import { borderColor, gold, hamburger, loginBtn, loginBtnActive, mainBackgroundColor, styleBackground } from "../styling";
 import { userContext } from "../userContext";
+import ActivitiesPage from "./activities/activities-page";
 import ClockInOut from "./clock-in-out";
+import ComplaintsPage from "./complaints/complaints-page";
 import NavigationPanel from "./navigation-functions";
 
 export default function HomePage() {
     const account = useContext(userContext);
-
+    const user = account.user;
     const [Nav, setNav] = useState(false);
     const [currentPage, setCurrentPage] = useState(pages.clock);
     function openNav() {
         setNav(Nav ? false : true);
     }
     return (<ImageBackground source={gold} style={styleBackground.image}>
-        <View style={styles.welcome}>
-            <Text style={styles.welcomeText}>Welcome {account.user.fname}</Text>
+        <View style={styles.border}>
+            <View style={styles.welcome}>
+                <Text style={styles.welcomeText}>Welcome {account.user.fname}</Text>
+            </View>
+            <View style={styles.pages}>
+                {currentPage === pages.clock ?
+                    <ClockInOut /> :
+                    currentPage === pages.activity ?
+                        <ActivitiesPage /> :
+                        currentPage === pages.room ?
+                            <Text>Reservations</Text> :
+                            currentPage === pages.complaints ?
+                                <ComplaintsPage /> : <Text>Something's wrong</Text>
+                }
+            </View>
+            {Nav ?
+                <NavigationPanel setNav={setNav} Nav={Nav} setPage={setCurrentPage} account={user} />
+                :
+                <Pressable onPress={openNav}
+                    style={({ pressed }) => [
+                        {
+                            backgroundColor: pressed
+                                ? loginBtnActive
+                                : loginBtn
+                        },
+                        styles.NavBTN
+                    ]}>
+                    <ImageBackground source={hamburger} style={styles.ham} />
+                </Pressable >
+            }
         </View>
-        {currentPage === pages.clock ?
-            <ClockInOut /> :
-
-            <Text>Activity</Text>
-        }
-        {Nav ?
-            <NavigationPanel setNav={setNav} Nav={Nav} setPage={setCurrentPage} />
-            :
-            <Pressable onPress={openNav}
-                style={({ pressed }) => [
-                    {
-                        backgroundColor: pressed
-                            ? loginBtnActive
-                            : loginBtn
-                    },
-                    styles.NavBTN
-                ]}>
-                <ImageBackground source={hamburger} style={styles.ham} />
-            </Pressable >
-        }
-
     </ImageBackground >);
 }
 
 const styles = StyleSheet.create({
+    border: {
+        height: '98%',
+        width: '100%',
+    },
+    pages: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+    },
     ham: {
         height: '100%',
         width: '100%',

@@ -1,11 +1,4 @@
-
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import ActivitiesList from './src/components/activities/activities-list';
-import ActivityDetails from './src/components/activities/activity-details';
-import CreateActivity from './src/components/activities/create-activity';
-import ComplaintsList from './src/components/complaints/complaints-list';
-import ComplaintsDetails from './src/components/complaints/complaints-details';
+import { StyleSheet, View } from 'react-native';
 import { Employee } from './dtos';
 import Login from './components/login_page';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -42,6 +35,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
+    height: '100%',
   },
 });
 

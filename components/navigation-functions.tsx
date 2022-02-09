@@ -8,7 +8,7 @@ import { borderColor, loginBtn, loginBtnActive, mainBackgroundColor, textColor }
 const emptyAcc: Employee = {
     id: NaN, isManager: false, fname: '', lname: '', username: '', password: ''
 };
-export default function NavigationPanel(props: { setNav: Function, Nav: boolean, setPage: Function }) {
+export default function NavigationPanel(props: { setNav: Function, Nav: boolean, setPage: Function, account: Employee }) {
     const translation = useRef(new Animated.Value(-200)).current;
     const fade = useRef(new Animated.Value(0)).current;
     const account = useContext(userContext);
@@ -37,11 +37,25 @@ export default function NavigationPanel(props: { setNav: Function, Nav: boolean,
         <Animated.View style={[styles.NAVNegContainer, { opacity: fade }]}>
             <Pressable style={styles.NAVNeg} onPress={openNav}></Pressable>
         </Animated.View>
+
         <Animated.View style={[styles.NAV, { transform: [{ translateX: translation }] }]}>
             <View style={styles.space} />
+            <View style={pageStyle.border} />
+            <View style={pageStyle.border} />
+
             <ChoosePage name={pages.clock} setPage={props.setPage} setNav={props.setNav} />
-            <ChoosePage name={pages.room} setPage={props.setPage} setNav={props.setNav} />
-            <ChoosePage name={pages.activity} setPage={props.setPage} setNav={props.setNav} />
+            {
+                props.account.isManager ?
+                    <>
+                        <ChoosePage name={pages.complaints} setPage={props.setPage} setNav={props.setNav} />
+                    </> :
+                    <>
+                        <ChoosePage name={pages.room} setPage={props.setPage} setNav={props.setNav} />
+                        <ChoosePage name={pages.activity} setPage={props.setPage} setNav={props.setNav} />
+                    </>
+            }
+            <View style={pageStyle.border} />
+
             <View style={styles.logOutPanel}>
                 <Pressable onPress={async () => {
                     await AsyncStorage.setItem("user", JSON.stringify(emptyAcc));
@@ -58,6 +72,7 @@ export default function NavigationPanel(props: { setNav: Function, Nav: boolean,
                     <Text style={styles.logoutBtnText}>Log Out</Text>
                 </Pressable>
             </View>
+
         </Animated.View>
     </>)
 }
@@ -115,7 +130,6 @@ export function ChoosePage(prop: { name: string, setPage: Function, setNav: Func
     }
 
     return (<>
-        <View style={pageStyle.border} />
         <Pressable onPress={setPage} style={({ pressed }) => [
             {
                 backgroundColor: pressed
