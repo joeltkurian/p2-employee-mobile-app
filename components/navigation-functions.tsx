@@ -43,6 +43,8 @@ export default function NavigationPanel(props: { setNav: Function, Nav: boolean,
             <View style={pageStyle.border} />
             <View style={pageStyle.border} />
 
+            {/* ------------------------------------------- INSERT PAGES BELOW BASED ON MANAGER ACCOUNT OR NOT ------------------------------------------------------------------------------- */}
+
             <ChoosePage name={pages.clock} setPage={props.setPage} setNav={props.setNav} />
             {
                 props.account.isManager ?
@@ -54,6 +56,10 @@ export default function NavigationPanel(props: { setNav: Function, Nav: boolean,
                         <ChoosePage name={pages.activity} setPage={props.setPage} setNav={props.setNav} />
                     </>
             }
+
+            {/* -------------------------------------------------------------------------------------------------------------------------- */}
+
+
             <View style={pageStyle.border} />
 
             <View style={styles.logOutPanel}>
