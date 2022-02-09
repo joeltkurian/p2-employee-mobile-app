@@ -5,8 +5,13 @@ import { borderColor, loginBtn, loginBtnActive, mainBackgroundColor } from "../.
 
 export default function ActivityDetails(props: { activity: Activity, setSeeMore: Function }) {
     const index = activityLocationBasedImages.findIndex(c => c.location === props.activity.location);
+
+    function handleCancel(){
+        // once backend is connected function should be similar to change status on P1
+    }
+
     return (<>
-        <Pressable onPress={() => props.setSeeMore(defaultActivity)} style={styles.acitivityDetailClose} />
+        {/* <Pressable onPress={() => props.setSeeMore(defaultActivity)} style={styles.acitivityDetailClose} /> */}
         <View style={styles.card}>
             <Text style={styles.infoReservation}>
                 {props.activity.title}
@@ -30,7 +35,7 @@ export default function ActivityDetails(props: { activity: Activity, setSeeMore:
                 Start:{props.activity.startTime} - End:{props.activity.endTime}
             </Text>
         </View>
-        <Pressable
+        <Pressable onPress={handleCancel}
             style={({ pressed }) => [
                 {
                     backgroundColor: pressed

@@ -7,14 +7,15 @@ import { Activity, defaultActivity } from '../../../dtos';
 import ActivityDetails from './activity-details';
 
 interface ActivityProps {
-
+    activityDetails: Activity;
+    setActivityDetails:(activity: Activity)=> void;
 }
 
 
-export default function ActivitiesList() {
-    const [activity, setSeeMore] = useState<Activity>(defaultActivity);
+export default function ActivitiesList({activityDetails, setActivityDetails}: ActivityProps) {
+    
     function handleSeeMore(activity: Activity) {
-        setSeeMore(activity);
+        setActivityDetails(activity);
     }
     const activitiesCard = (params: any) => {
         const activity: Activity = params.item;
@@ -26,11 +27,12 @@ export default function ActivitiesList() {
                     <Text style={styles.info}>Title :  {activity.title} </Text>
                     <Text style={styles.info}>Status :  {activity.status} </Text>
                     <Text style={styles.info}>Start Time :  {activity.startTime} </Text>
+
                 </Card>
             </Pressable>
         </>);
     }
-    if (activity.id === "") {
+    if (activityDetails.id === "") {
         return (
             <View style={styles.view}>
                 <FlatList data={dummyData} renderItem={activitiesCard} />
@@ -38,7 +40,7 @@ export default function ActivitiesList() {
         )
     } else {
         return (<>
-            <ActivityDetails activity={activity} setSeeMore={setSeeMore} />
+            <ActivityDetails activity={activityDetails} setSeeMore={setActivityDetails} />
         </>)
     }
 
