@@ -3,7 +3,7 @@ import { userContext } from "../userContext";
 import { Animated, View, StyleSheet, Text, Pressable } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Employee, pages } from "../dtos";
-import { borderColor, loginBtn, loginBtnActive, mainBackgroundColor, textColor } from "../styling";
+import { borderColor, loginBtn, loginBtnActive, textColor } from "../styling";
 
 const emptyAcc: Employee = {
     id: NaN, isManager: false, fname: '', lname: '', username: '', password: ''
