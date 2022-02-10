@@ -1,20 +1,20 @@
 import { Card } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { View, Text, Pressable, ImageBackground, StyleSheet } from "react-native";
-import { dummyComplaints } from '../../dummy-data/dummy';
+import { dummyProblems } from '../../dummy-data/dummy';
 
 interface ProblemsProps {
 
 }
 
-export default function ComplaintsList(props: ProblemsProps) {
+export default function ProblemsList(props: ProblemsProps) {
 
     function handleSeeMore() {
 
     }
 
 
-    const complaintsCard = (params: any) => {
+    const problemsCard = (params: any) => {
         return (
             <Pressable onPress={() => {}}>
                 <Card containerStyle={styles.card}>
@@ -27,7 +27,7 @@ export default function ComplaintsList(props: ProblemsProps) {
                     <View style={styles.insideCard}>
                         {
                             params.item.photoLink ?
-                                <ImageBackground source={{ uri: params.item.photoLink }} style={styles.complaintPhoto} /> : <></>
+                                <ImageBackground source={{ uri: params.item.photoLink }} style={styles.problemPhoto} /> : <></>
                         }
                         <View style={styles.textCard}>
                             <Text style={styles.info}>
@@ -46,7 +46,7 @@ export default function ComplaintsList(props: ProblemsProps) {
     return (
         <View style={styles.view}>
             <View>
-                <FlatList data={dummyComplaints} renderItem={complaintsCard} />
+                <FlatList data={dummyComplaints} renderItem={problemsCard} />
             </View>
         </View>
     )
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
     },
-    complaintPhoto: {
+    problemPhoto: {
         top: '-5%',
         width: 120,
         height: 120,

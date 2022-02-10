@@ -5,20 +5,16 @@ interface ProblemsProps {
 
 }
 
-export default function ComplaintsDetails(props: ProblemsProps) {
+export default function ProblemsDetails(props: ProblemsProps) {
 
     function changeStatus() {
-
-    }
-
-    function complaintsList() {
 
     }
 
     return (
         <View style={styles.background}>
             <View style={styles.buttonDiv}>
-                <Pressable onPress={() => { }} style={styles.buttonA}><Text style={styles.buttonText}>All Complaints</Text></Pressable>
+                <Pressable onPress={() => { }} style={styles.buttonA}><Text style={styles.buttonText}>All Problems</Text></Pressable>
             </View>
 
             <View style={styles.display}>
