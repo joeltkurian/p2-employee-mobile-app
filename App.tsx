@@ -8,7 +8,6 @@ import HomePage from './components/homepage';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 
-
 export default function App() {
   const [user, setUser] = useState<Employee>(account);
 
@@ -46,5 +45,4 @@ const styles = StyleSheet.create({
 
 const account: Employee = {
   id: NaN, isManager: false, fname: '', lname: '', username: '', password: ''
-};
-
+}
