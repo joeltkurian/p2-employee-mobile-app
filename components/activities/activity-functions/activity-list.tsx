@@ -9,17 +9,17 @@ import ActivityDetails from './activity-details';
 interface ActivityProps {
     activityDetails: Activity;
     setActivityDetails:(activity: Activity)=> void;
+    activityList: Activity[];
 }
 
 
-export default function ActivitiesList({activityDetails, setActivityDetails}: ActivityProps) {
+export default function ActivitiesList({activityDetails, setActivityDetails, activityList}: ActivityProps) {
     
     function handleSeeMore(activity: Activity) {
         setActivityDetails(activity);
     }
     const activitiesCard = (params: any) => {
         const activity: Activity = params.item;
-        // console.log(activity);
         return (<>
             <Pressable style={styles.pressableCard} onPress={() => { handleSeeMore(activity); }}>
                 <Card containerStyle={styles.card}>
@@ -35,7 +35,7 @@ export default function ActivitiesList({activityDetails, setActivityDetails}: Ac
     if (activityDetails.id === "") {
         return (
             <View style={styles.view}>
-                <FlatList data={dummyData} renderItem={activitiesCard} />
+                <FlatList data={activityList} renderItem={activitiesCard} />
             </View>
         )
     } else {

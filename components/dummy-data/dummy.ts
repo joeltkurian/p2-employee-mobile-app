@@ -110,7 +110,7 @@ export const dummyLocation =
         },
     ]
 
-export const dummyComplaints =
+export const dummyProblems =
     [
         {
             id: "Room #101",

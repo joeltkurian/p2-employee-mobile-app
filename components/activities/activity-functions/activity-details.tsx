@@ -1,13 +1,23 @@
 import { Pressable, View, Text, ImageBackground, StyleSheet } from "react-native"
+import { useDispatch } from "react-redux";
 import { Activity, activityLocationBasedImages, defaultActivity } from "../../../dtos";
+import activityService from "../../../service/activity-service";
+import { getAllActivities } from "../../../store/actions";
 import { borderColor, loginBtn, loginBtnActive, mainBackgroundColor } from "../../../styling";
 
 
 export default function ActivityDetails(props: { activity: Activity, setSeeMore: Function }) {
     const index = activityLocationBasedImages.findIndex(c => c.location === props.activity.location);
-
+    const dispatch = useDispatch();
+    
     function handleCancel(){
         // once backend is connected function should be similar to change status on P1
+        activityService.cancelActivity(props.activity.id).then((response)=>{
+            activityService.getAllActivities().then((response)=>{
+                dispatch(getAllActivities(response))
+            })
+        })
+        props.setSeeMore(defaultActivity);
     }
 
     return (<>
@@ -16,17 +26,17 @@ export default function ActivityDetails(props: { activity: Activity, setSeeMore:
             <Text style={styles.infoReservation}>
                 {props.activity.title}
             </Text>
-            <View style={styles.border} />
+        <View style={styles.border} />
 
-            {index != -1 ?
-                <ImageBackground source={{ uri: activityLocationBasedImages[index].photoLink }} style={styles.complaintPhoto}>
-                    <View style={styles.locationView}>
-                        <Text style={styles.locationText}>{props.activity.location}</Text>
-                    </View>
-                </ImageBackground>
-                : <></>
-            }
-            <View style={styles.border} />
+        {index != -1 ?
+            <ImageBackground source={{ uri: activityLocationBasedImages[index].photoLink }} style={styles.complaintPhoto}>
+                <View style={styles.locationView}>
+                    <Text style={styles.locationText}>{props.activity.location}</Text>
+                </View>
+            </ImageBackground>
+        : <></>
+        }
+        <View style={styles.border} />
             <Text style={styles.info}>
                 Description: {props.activity.desc}
             </Text>
@@ -44,7 +54,7 @@ export default function ActivityDetails(props: { activity: Activity, setSeeMore:
                 },
                 styles.cancelBTN
             ]}>
-            <Text style={styles.info}>Cancel Activity </Text>
+            <Text style={styles.info}>Cancel Activity</Text>
         </Pressable>
     </>)
 }

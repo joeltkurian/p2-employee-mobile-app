@@ -3,24 +3,60 @@ import { Pressable, View, Text, StyleSheet } from "react-native";
 import { TextInput } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
-import { maxDescLength } from '../../../dtos';
+import { Activity, maxDescLength } from '../../../dtos';
 import { loginBtn, loginBtnActive } from '../../../styling';
 import { borderColor, mainBackgroundColor } from '../../../styling';
+import activityService from '../../../service/activity-service';
+import { useDispatch } from 'react-redux';
+import { getAllActivities } from '../../../store/actions';
 
-export default function CreateActivity() {
+interface ActivitiesPageProps {
+    setNewActivity: (newActivity: boolean) => void;
+}
 
-    const [selectedLanguage, setSelectedLanguage] = useState();
+
+export default function CreateActivity({setNewActivity}: ActivitiesPageProps) {
+
+    const [selectedLocation, setSelectedLocation] = useState(dummyLocation[0].label);
+    const [titleInput, setTitleInput] = useState('');
+    const [descInput, setDescInput] = useState('');
+    const [startTimeInput, setStartTimeInput] = useState("");
+    const [endTimeInput, setEndTimeInput] = useState("");
+    const dispatch = useDispatch();
 
     function submitActivity() {
-
+        const newActivity: Activity = {
+            id: "",
+            title: titleInput,
+            desc: descInput,
+            startTime: Number(startTimeInput),
+            endTime: Number(endTimeInput),
+            location: selectedLocation,
+            status: "On Schedule",
+        }
+        activityService.createActivity(newActivity).then((response)=>{
+            activityService.getAllActivities().then((response)=>{
+                dispatch(getAllActivities(response))
+            })
+        })
+        
+        setNewActivity(false);
     }
 
-    function createActivity() {
-
+    function handleTitleInput(event: any){
+        setTitleInput(event)
     }
 
-    function activityList() {
+    function handleDescInput(event: any){
+        setDescInput(event)
+    }
 
+    function handleStartTimeInput(event: any){
+        setStartTimeInput(event)
+    }
+
+    function handleEndTimeInput(event: any){
+        setEndTimeInput(event)
     }
 
 
@@ -28,26 +64,26 @@ export default function CreateActivity() {
         <View style={styles.view}>
             <View style={styles.table}>
                 <Text style={styles.h1}>Title :</Text>
-                <TextInput style={styles.input}></TextInput>
+                <TextInput style={styles.input} value={titleInput} onChangeText={(value)=>handleTitleInput(value)}/>
 
                 <Text style={styles.h1}>Description :</Text>
-                <TextInput multiline={true} maxLength={maxDescLength} style={styles.inputDesc}></TextInput>
+                <TextInput multiline={true} maxLength={maxDescLength} style={styles.inputDesc}  value={descInput} onChangeText={(value)=>handleDescInput(value)}/>
 
                 <Text style={styles.h1}>Start Time :</Text>
-                <TextInput style={styles.input}></TextInput>
+                <TextInput style={styles.input} value={startTimeInput} onChangeText={(value)=>handleStartTimeInput(value)}/>
 
                 <Text style={styles.h1}>End Time :</Text>
-                <TextInput style={styles.input}></TextInput>
+                <TextInput style={styles.input} value={endTimeInput} onChangeText={(value)=>handleEndTimeInput(value)}/>
 
                 <Text style={styles.h1}>Location :</Text>
-                <Picker selectedValue={selectedLanguage} style={styles.picker}
-                    onValueChange={(itemValue, itemIndex) => setSelectedLanguage(itemValue)}>
-                    {dummyLocation.map((locals, i) => { return <Picker.Item label={locals.label} value={locals.value} key={i} /> })}
+                <Picker selectedValue={selectedLocation} style={styles.picker}
+                    onValueChange={(itemValue, itemIndex) => setSelectedLocation(itemValue)}>
+                    {dummyLocation.map((locals, i) => { return <Picker.Item label={locals.label} value={locals.label} key={i} /> })}
                 </Picker>
             </View>
 
             <View style={styles.buttonDiv}>
-                <Pressable onPress={() => { }} style={({ pressed }) => [
+                <Pressable onPress={submitActivity} style={({ pressed }) => [
                     {
                         backgroundColor: pressed
                             ? loginBtnActive
