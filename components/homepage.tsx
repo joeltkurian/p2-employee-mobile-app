@@ -5,7 +5,7 @@ import { borderColor, gold, hamburger, loginBtn, loginBtnActive, mainBackgroundC
 import { userContext } from "../userContext";
 import ActivitiesPage from "./activities/activities-page";
 import ClockInOut from "./clock-in-out";
-import ComplaintsPage from "./complaints/complaints-page";
+import ComplaintsPage from "./problems/problems-page";
 import NavigationPanel from "./navigation-functions";
 
 export default function HomePage() {

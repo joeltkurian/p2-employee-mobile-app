@@ -1,4 +1,4 @@
-import ComplaintsList from "./complaints-list/complaints-list";
+import ComplaintsList from "./problems-list/problems-list";
 
 
 export default function ComplaintsPage() {

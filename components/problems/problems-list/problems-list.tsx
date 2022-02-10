@@ -46,7 +46,7 @@ export default function ProblemsList(props: ProblemsProps) {
     return (
         <View style={styles.view}>
             <View>
-                <FlatList data={dummyComplaints} renderItem={problemsCard} />
+                <FlatList data={dummyProblems} renderItem={problemsCard} />
             </View>
         </View>
     )
