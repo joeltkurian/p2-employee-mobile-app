@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, Button, SafeAreaView, Pressable } from "react-native";
-import { ServiceRequest, Offering, Offerings } from "./dtos";
+import { ServiceRequest, Offering, Offerings } from "../../dtos";
 
 export default function RoomService(){
 
@@ -107,6 +107,8 @@ export default function RoomService(){
 
     useEffect(()=>{
         setServiceRequests(serviceRequests);
+        for(const c of serviceRequests)
+            console.log(`${c.id}, `);
     },[updateBtn]);
 
 

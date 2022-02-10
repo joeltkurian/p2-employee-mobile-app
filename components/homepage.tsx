@@ -7,6 +7,7 @@ import ActivitiesPage from "./activities/activities-page";
 import ClockInOut from "./clock-in-out";
 import ComplaintsPage from "./problems/problems-page";
 import NavigationPanel from "./navigation-functions";
+import RoomService from "./room-service/room-service-component";
 
 export default function HomePage() {
     const account = useContext(userContext);
@@ -27,7 +28,7 @@ export default function HomePage() {
                     currentPage === pages.activity ?
                         <ActivitiesPage /> :
                         currentPage === pages.room ?
-                            <Text>Reservations</Text> :
+                            <RoomService/> :
                             currentPage === pages.complaints ?
                                 <ComplaintsPage /> : <Text>Something's wrong</Text>
                 }
