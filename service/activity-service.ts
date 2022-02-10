@@ -5,7 +5,7 @@ class ActivityService{
 
     private URI: string;
     constructor (){
-        this.URI = "http://52.224.91.41:3000/"
+        this.URI = "http://20.121.74.219:3000/"
     }
 
     getAllActivities(): Promise<Activity[]> {
