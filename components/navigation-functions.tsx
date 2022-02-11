@@ -50,6 +50,7 @@ export default function NavigationPanel(props: { setNav: Function, Nav: boolean,
                 props.account.isManager ?
                     <>
                         <ChoosePage name={pages.problems} setPage={props.setPage} setNav={props.setNav} />
+                        <ChoosePage name={pages.employeeview} setPage={props.setPage} setNav={props.setNav} />
                     </> :
                     <>
                         <ChoosePage name={pages.room} setPage={props.setPage} setNav={props.setNav} />
