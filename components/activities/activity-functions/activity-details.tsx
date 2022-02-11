@@ -11,7 +11,6 @@ export default function ActivityDetails(props: { activity: Activity, setSeeMore:
     const dispatch = useDispatch();
     
     function handleCancel(){
-        // once backend is connected function should be similar to change status on P1
         activityService.cancelActivity(props.activity.id).then((response)=>{
             activityService.getAllActivities().then((response)=>{
                 dispatch(getAllActivities(response))
@@ -29,7 +28,7 @@ export default function ActivityDetails(props: { activity: Activity, setSeeMore:
         <View style={styles.border} />
 
         {index != -1 ?
-            <ImageBackground source={{ uri: activityLocationBasedImages[index].photoLink }} style={styles.complaintPhoto}>
+            <ImageBackground source={{ uri: activityLocationBasedImages[index].photoLink }} style={styles.problemPhoto}>
                 <View style={styles.locationView}>
                     <Text style={styles.locationText}>{props.activity.location}</Text>
                 </View>
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
         borderColor: '#000',
         marginBottom: 5,
     },
-    complaintPhoto: {
+    problemPhoto: {
         width: 325,
         height: 225,
     },
