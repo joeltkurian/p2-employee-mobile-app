@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
 import { ServiceRequest, Offering, Offerings } from "../../dtos";
 import { borderColor, loginBtn, loginBtnActive, mainBackgroundColor, textColor } from "../../styling";
-import { dummy } from "../dummy-data/dummy";
 
 export default function RoomService() {
 
@@ -44,7 +43,6 @@ export default function RoomService() {
             setupdateBtn(!updateBtn);
         }
         else{
-            console.log(request.status);
             alert("Something went wrong");
         }
     }
@@ -55,7 +53,6 @@ export default function RoomService() {
             const fullList:ServiceRequest[] = await response.json();
             const openRequests = filterAndSort(fullList)
             setServiceRequests(openRequests);})();
-            
     }, [updateBtn]);
 
 
