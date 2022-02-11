@@ -16,3 +16,12 @@ function does(s: any) {
 
 export const userContext = createContext({ user: account, setUser: does });
 
+
+export function formatted_date(date: number) {
+    var result = "";
+    var d = new Date(date);
+    result += "Date: " + (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear() + '\n' +
+        "Time: " + d.getHours() + ":" + d.getMinutes() + ":" +
+        d.getSeconds() + " ";
+    return result;
+}

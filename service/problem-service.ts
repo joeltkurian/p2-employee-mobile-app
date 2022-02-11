@@ -1,36 +1,33 @@
 import axios from 'axios';
 import { Problem } from '../dtos';
 
-class ProblemService{
+class ProblemService {
 
     private URI: string;
-    constructor (){
-        this.URI = "http://20.121.74.219:3000/"
+    constructor() {
+        this.URI = "http://problemapi.azurewebsites.net/api/problems/";
     }
 
     getAllProblems(): Promise<Problem[]> {
         return axios
-            .get(this.URI + `problems`)
-                .then(result => result.data)
-                    .catch(error => {console.log(error)});
+            .get(this.URI)
+            .then(result => result.data)
+            .catch(error => { console.log(error) });
     }
 
     getProblemById(problemId: Problem): Promise<Problem> {
         return axios
-            .get(this.URI + `problems/${problemId}`)
-                .then(result => result.data)
-                    .catch(error => {console.log(error)});
+            .get(this.URI + `${problemId}`)
+            .then(result => result.data)
+            .catch(error => { console.log(error) });
     }
 
     reviewProblem(problemId: string): Promise<Problem> {
-        //console.log(`problems/${problemId}/reviewed`)
         return axios
-            .patch(this.URI + `problems/${problemId}/reviewed`)
-                .then(result => result.data)
-                    .catch(error => {console.log(error)});
+            .patch(this.URI + `${problemId}`)
+            .then(result => result.data)
+            .catch(error => { console.log(error) });
     }
-
-
 }
 
 

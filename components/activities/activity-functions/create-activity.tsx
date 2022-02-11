@@ -1,6 +1,5 @@
 import { dummyLocation } from '../../dummy-data/dummy';
-import { Pressable, View, Text, StyleSheet, Alert } from "react-native";
-import { TextInput } from 'react-native-gesture-handler';
+import { Pressable, View, Text, StyleSheet, Alert, TextInput } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
 import { Activity, maxDescLength, timeFormat } from '../../../dtos';
@@ -15,7 +14,7 @@ interface ActivitiesPageProps {
 }
 
 
-export default function CreateActivity({setNewActivity}: ActivitiesPageProps) {
+export default function CreateActivity({ setNewActivity }: ActivitiesPageProps) {
 
     const [selectedLocation, setSelectedLocation] = useState(dummyLocation[0].label);
     const [titleInput, setTitleInput] = useState('');
@@ -25,88 +24,89 @@ export default function CreateActivity({setNewActivity}: ActivitiesPageProps) {
     const dispatch = useDispatch();
 
     function submitActivity() {
-        if(checkTime()){
-        const newActivity: Activity = {
-            id: "",
-            title: titleInput,
-            desc: descInput,
-            startTime: Number(startTimeInput),
-            endTime: Number(endTimeInput),
-            location: selectedLocation,
-            status: "On Schedule",
-        }
-        activityService.createActivity(newActivity).then((response)=>{
-            activityService.getAllActivities().then((response)=>{
-                dispatch(getAllActivities(response))
+        if (checkTime()) {
+            const newActivity: Activity = {
+                id: "",
+                title: titleInput,
+                desc: descInput,
+                startTime: Number(startTimeInput),
+                endTime: Number(endTimeInput),
+                location: selectedLocation,
+                status: "On Schedule",
+            }
+            activityService.createActivity(newActivity).then((response) => {
+                activityService.getAllActivities().then((response) => {
+                    dispatch(getAllActivities(response))
+                })
             })
-        })
-        
-        setNewActivity(false);}else{
+
+            setNewActivity(false);
+        } else {
             console.log("button click");
             showAlert()
         }
     }
 
-    function handleTitleInput(event: any){
+    function handleTitleInput(event: any) {
         setTitleInput(event)
     }
 
-    function handleDescInput(event: any){
+    function handleDescInput(event: any) {
         setDescInput(event)
     }
 
-    function handleStartTimeInput(event: any){
+    function handleStartTimeInput(event: any) {
         setStartTimeInput(event)
     }
 
-    function handleEndTimeInput(event: any){
+    function handleEndTimeInput(event: any) {
         setEndTimeInput(event)
     }
 
-    function checkTime(){
-        if(startTimeInput.match(timeFormat) && endTimeInput.match(timeFormat)){
+    function checkTime() {
+        if (startTimeInput.match(timeFormat) && endTimeInput.match(timeFormat)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    function showAlert(){
+    function showAlert() {
         console.log("Alert Triggered");
         Alert.alert(
             "Incorrect Time Input",
             "Please enter a valid time in HHMM format",
             [
-              {
-                text: "Understood",
-                onPress: () => Alert.alert("Understood Pressed"),
-                style: "cancel",
-              },
+                {
+                    text: "Understood",
+                    onPress: () => Alert.alert("Understood Pressed"),
+                    style: "cancel",
+                },
             ],
             {
-              cancelable: true,
-              onDismiss: () =>
-                Alert.alert(
-                  "This alert was dismissed by tapping outside of the alert dialog."
-                ),
+                cancelable: true,
+                onDismiss: () =>
+                    Alert.alert(
+                        "This alert was dismissed by tapping outside of the alert dialog."
+                    ),
             }
-          );
+        );
     }
 
     return (<>
         <View style={styles.view}>
             <View style={styles.table}>
                 <Text style={styles.h1}>Title :</Text>
-                <TextInput style={styles.input} value={titleInput} onChangeText={(value)=>handleTitleInput(value)}/>
+                <TextInput style={styles.input} value={titleInput} onChangeText={(value) => handleTitleInput(value)} />
 
                 <Text style={styles.h1}>Description :</Text>
-                <TextInput multiline={true} maxLength={maxDescLength} style={styles.inputDesc}  value={descInput} onChangeText={(value)=>handleDescInput(value)}/>
+                <TextInput multiline={true} maxLength={maxDescLength} style={styles.inputDesc} value={descInput} onChangeText={(value) => handleDescInput(value)} />
 
                 <Text style={styles.h1}>Start Time :</Text>
-                <TextInput style={styles.input} value={startTimeInput} onChangeText={(value)=>handleStartTimeInput(value)}/>
+                <TextInput style={styles.input} value={startTimeInput} onChangeText={(value) => handleStartTimeInput(value)} />
 
                 <Text style={styles.h1}>End Time :</Text>
-                <TextInput style={styles.input} value={endTimeInput} onChangeText={(value)=>handleEndTimeInput(value)}/>
+                <TextInput style={styles.input} value={endTimeInput} onChangeText={(value) => handleEndTimeInput(value)} />
 
                 <Text style={styles.h1}>Location :</Text>
                 <Picker selectedValue={selectedLocation} style={styles.picker}

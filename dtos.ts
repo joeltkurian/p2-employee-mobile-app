@@ -69,7 +69,7 @@ export const defaultActivity: Activity =
 export const defaultProblem: Problem =
 {
     id: "",
-    submittedTime: 1200,
+    submittedTime: NaN,
     desc: "",
     status: "Unreviewed",
     photoLink: "",

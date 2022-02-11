@@ -1,6 +1,5 @@
 import { Card } from 'react-native-elements';
-import { FlatList } from 'react-native-gesture-handler';
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import { dummyData } from '../../dummy-data/dummy'
 import { useState } from 'react';
 import { Activity, defaultActivity } from '../../../dtos';
@@ -8,48 +7,53 @@ import ActivityDetails from './activity-details';
 
 interface ActivityProps {
     activityDetails: Activity;
-    setActivityDetails:(activity: Activity)=> void;
+    setActivityDetails: (activity: Activity) => void;
     activityList: Activity[];
 }
 
 
-export default function ActivitiesList({activityDetails, setActivityDetails, activityList}: ActivityProps) {
-    
+export default function ActivitiesList({ activityDetails, setActivityDetails, activityList }: ActivityProps) {
+
     function handleSeeMore(activity: Activity) {
         setActivityDetails(activity);
     }
 
     let sortedArr: Activity[] = [];
 
-    activityList.map(activity => {if(activity.status === "On Schedule"){
-        sortedArr.push(activity)
-    }})
-    activityList.map(activity => {if(activity.status === "Cancelled"){
-        sortedArr.push(activity)
-    }})
+    activityList.map(activity => {
+        if (activity.status === "On Schedule") {
+            sortedArr.push(activity)
+        }
+    })
+    activityList.map(activity => {
+        if (activity.status === "Cancelled") {
+            sortedArr.push(activity)
+        }
+    })
 
     const activitiesCard = (params: any) => {
         const activity: Activity = params.item;
-        if(activity.status !== "Cancelled"){
-        return (<>
-            <Pressable style={styles.pressableCard} onPress={() => { handleSeeMore(activity); }}>
-                <Card containerStyle={styles.card}>
-
-                    <Text style={styles.info}>Title :  {activity.title} </Text>
-                    <Text style={styles.info}>Status :  {activity.status} </Text>
-                    <Text style={styles.info}>Start Time :  {activity.startTime} </Text>
-
-                </Card>
-            </Pressable>
-        </>);}else{
+        if (activity.status !== "Cancelled") {
             return (<>
                 <Pressable style={styles.pressableCard} onPress={() => { handleSeeMore(activity); }}>
-                    <Card containerStyle={styles.cardCancelled}>
-    
+                    <Card containerStyle={styles.card}>
+
                         <Text style={styles.info}>Title :  {activity.title} </Text>
                         <Text style={styles.info}>Status :  {activity.status} </Text>
                         <Text style={styles.info}>Start Time :  {activity.startTime} </Text>
-    
+
+                    </Card>
+                </Pressable>
+            </>);
+        } else {
+            return (<>
+                <Pressable style={styles.pressableCard}>
+                    <Card containerStyle={styles.cardCancelled}>
+
+                        <Text style={styles.info}>Title :  {activity.title} </Text>
+                        <Text style={styles.info}>Status :  {activity.status} </Text>
+                        <Text style={styles.info}>Start Time :  {activity.startTime} </Text>
+
                     </Card>
                 </Pressable>
             </>);
@@ -94,6 +98,7 @@ const styles = StyleSheet.create({
     cardCancelled: {
         backgroundColor: '#BBBBBB',
         borderColor: '#525252',
+        opacity: 0.4,
         borderWidth: 5,
         borderRadius: 10,
         width: '100%',
