@@ -6,29 +6,46 @@ import { dummy } from "../dummy-data/dummy";
 
 export default function RoomService() {
 
-    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>(filterAndSort(dummy));
+    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>([]);
     const [updateBtn, setupdateBtn] = useState(false);
 
-    function updateStatus(request: ServiceRequest) {
+    async function updateStatus(request: ServiceRequest) {
         const temp = serviceRequests;
         if (request.status === "Ordered") {
             for (let i = 0; i < serviceRequests.length; i++) {
                 if (temp[i].id === request.id) {
-                    temp[i].status = 'Processing'
-                    setServiceRequests(temp);
+                    const action = {status:"Processing"}
+                    const response = await fetch('http://20.121.74.219:3000/servicerequests/'+request.id,{
+                        method:"PATCH",
+                        body:JSON.stringify(action),
+                        headers:{
+                            'content-type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    })
                 }
             }
             setupdateBtn(!updateBtn);
         }
-        else if (request.status === 'Processing') {
+        else if (request.status === "Processing") {
             for (let i = 0; i < serviceRequests.length; i++) {
                 if (temp[i].id === request.id) {
-                    temp[i].status = 'Completed';
-                    temp.splice(i, 1);
-                    setServiceRequests(temp);
+                    const action = {status:"Completed"}
+                    const response = await fetch('http://20.121.74.219:3000/servicerequests/'+request.id,{
+                        method:"PATCH",
+                        body:JSON.stringify(action),
+                        headers:{
+                            'content-type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    })                    
                 }
             }
             setupdateBtn(!updateBtn);
+        }
+        else{
+            console.log(request.status);
+            alert("Something went wrong");
         }
     }
 
@@ -38,6 +55,7 @@ export default function RoomService() {
             const fullList:ServiceRequest[] = await response.json();
             const openRequests = filterAndSort(fullList)
             setServiceRequests(openRequests);})();
+            
     }, [updateBtn]);
 
 
@@ -161,7 +179,7 @@ function convert(off: Offering[]): Offerings {
 export function RendarContent(props: { section: ServiceRequest }) {
     const [details, setDetails] = useState(false);
     const { section } = props;
-    const cart = convert(section.requestedOffering);
+    const cart = convert(section.requestedOfferings);
     function renderItem(props: { offering: Offering, quantity: number }) {
         const [title, desc] = props.offering.desc.split('*');
         return (
@@ -200,7 +218,7 @@ export function RendarContent(props: { section: ServiceRequest }) {
 }
 
 function filterAndSort(fullList: ServiceRequest[]): ServiceRequest[] {
-    const filteredCancel = fullList.filter(serviceRequest => serviceRequest.status !== "Cancelled");
+    const filteredCancel = fullList.filter(serviceRequest => serviceRequest.status !== "Cancel");
     const openRequests = filteredCancel.filter(serviceRequest => serviceRequest.status !== 'Completed');
     const sorted = openRequests.sort((a, b) => a.created < b.created ? -1 : a.created > b.created ? 1 : 0);
     return sorted;
