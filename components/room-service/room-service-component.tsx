@@ -33,9 +33,11 @@ export default function RoomService() {
     }
 
     useEffect(() => {
-        setServiceRequests(serviceRequests);
-        for (const c of serviceRequests)
-            console.log(`${c.id}, `);
+        (async()=>{
+            const response = await fetch('http://20.121.74.219:3000/servicerequests');
+            const fullList:ServiceRequest[] = await response.json();
+            const openRequests = filterAndSort(fullList)
+            setServiceRequests(openRequests);})();
     }, [updateBtn]);
 
 
