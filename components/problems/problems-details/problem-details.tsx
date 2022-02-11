@@ -1,21 +1,31 @@
-import { Pressable, View, Text } from "react-native";
-import styles from './styles';
+import { Pressable, View, Text, ImageBackground, StyleSheet } from "react-native"
+import { useDispatch } from "react-redux";
+import { Problem, defaultProblem } from "../../../dtos";
+import problemService from "../../../service/problem-service";
+import { getAllProblems } from "../../../store/actions";
+import { borderColor, loginBtn, loginBtnActive, mainBackgroundColor } from "../../../styling";
+import styles from './styles'
 
 interface ProblemsProps {
-
+    problemDetails: Problem;
+    setProblemDetails:(problem: Problem)=> void;
 }
 
-export default function ProblemsDetails(props: ProblemsProps) {
+export default function ProblemsDetails({problemDetails, setProblemDetails}: ProblemsProps) {
+
+    const dispatch = useDispatch();
 
     function changeStatus() {
-
+        problemService.reviewProblem(problemDetails.id).then((response)=>{
+            problemService.getAllProblems().then((response)=>{
+                dispatch(getAllProblems(response))
+            })
+        })
+        setProblemDetails(defaultProblem);
     }
 
     return (
         <View style={styles.background}>
-            <View style={styles.buttonDiv}>
-                <Pressable onPress={() => { }} style={styles.buttonA}><Text style={styles.buttonText}>All Problems</Text></Pressable>
-            </View>
 
             <View style={styles.display}>
 
@@ -30,33 +40,32 @@ export default function ProblemsDetails(props: ProblemsProps) {
                 <View style={styles.status}>
                     <Text style={styles.h2}>
                         {/* Location : {dummyLocation.find(location => location.value == 5)?.label} */}
-                        Current Status : Unreviewed
+                        Current Status : {problemDetails.status}
                     </Text>
                 </View>
 
                 <View style={styles.submittedTime}>
                     <View>
                         <Text style={styles.h3}>
-                            Time Submitted : 9:00
+                            Time Submitted : {problemDetails.submittedTime}
                         </Text>
                     </View>
                 </View>
 
                 <View style={styles.desc}>
                     <Text style={styles.h2}>
-                        Description :
+                        Description : 
                     </Text>
 
                     <Text style={styles.p}>
-                        Description details, John is a man of focus, commitment, this is where we repeat to see
-                        just how much text gets displayed in the window/box. blah blah blah,
+                        {problemDetails.desc}
                     </Text>
                 </View>
 
             </View>
 
             <View style={styles.buttonDiv}>
-                <Pressable style={styles.buttonC} onPress={() => { }}><Text style={styles.buttonText}>Mark as Reviewed</Text></Pressable>
+                <Pressable style={styles.buttonC} onPress={() => {changeStatus}}><Text style={styles.buttonText}>Mark as Reviewed</Text></Pressable>
             </View>
         </View>
     )

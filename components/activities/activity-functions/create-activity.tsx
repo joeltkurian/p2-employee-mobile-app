@@ -1,9 +1,9 @@
 import { dummyLocation } from '../../dummy-data/dummy';
-import { Pressable, View, Text, StyleSheet } from "react-native";
+import { Pressable, View, Text, StyleSheet, Alert } from "react-native";
 import { TextInput } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
-import { Activity, maxDescLength } from '../../../dtos';
+import { Activity, maxDescLength, timeFormat } from '../../../dtos';
 import { loginBtn, loginBtnActive } from '../../../styling';
 import { borderColor, mainBackgroundColor } from '../../../styling';
 import activityService from '../../../service/activity-service';
@@ -25,6 +25,7 @@ export default function CreateActivity({setNewActivity}: ActivitiesPageProps) {
     const dispatch = useDispatch();
 
     function submitActivity() {
+        if(checkTime()){
         const newActivity: Activity = {
             id: "",
             title: titleInput,
@@ -40,7 +41,10 @@ export default function CreateActivity({setNewActivity}: ActivitiesPageProps) {
             })
         })
         
-        setNewActivity(false);
+        setNewActivity(false);}else{
+            console.log("button click");
+            showAlert()
+        }
     }
 
     function handleTitleInput(event: any){
@@ -59,6 +63,35 @@ export default function CreateActivity({setNewActivity}: ActivitiesPageProps) {
         setEndTimeInput(event)
     }
 
+    function checkTime(){
+        if(startTimeInput.match(timeFormat) && endTimeInput.match(timeFormat)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function showAlert(){
+        console.log("Alert Triggered");
+        Alert.alert(
+            "Incorrect Time Input",
+            "Please enter a valid time in HHMM format",
+            [
+              {
+                text: "Understood",
+                onPress: () => Alert.alert("Understood Pressed"),
+                style: "cancel",
+              },
+            ],
+            {
+              cancelable: true,
+              onDismiss: () =>
+                Alert.alert(
+                  "This alert was dismissed by tapping outside of the alert dialog."
+                ),
+            }
+          );
+    }
 
     return (<>
         <View style={styles.view}>

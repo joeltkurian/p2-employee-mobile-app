@@ -18,8 +18,19 @@ export default function ActivitiesList({activityDetails, setActivityDetails, act
     function handleSeeMore(activity: Activity) {
         setActivityDetails(activity);
     }
+
+    let sortedArr: Activity[] = [];
+
+    activityList.map(activity => {if(activity.status === "On Schedule"){
+        sortedArr.push(activity)
+    }})
+    activityList.map(activity => {if(activity.status === "Cancelled"){
+        sortedArr.push(activity)
+    }})
+
     const activitiesCard = (params: any) => {
         const activity: Activity = params.item;
+        if(activity.status !== "Cancelled"){
         return (<>
             <Pressable style={styles.pressableCard} onPress={() => { handleSeeMore(activity); }}>
                 <Card containerStyle={styles.card}>
@@ -30,12 +41,24 @@ export default function ActivitiesList({activityDetails, setActivityDetails, act
 
                 </Card>
             </Pressable>
-        </>);
+        </>);}else{
+            return (<>
+                <Pressable style={styles.pressableCard} onPress={() => { handleSeeMore(activity); }}>
+                    <Card containerStyle={styles.cardCancelled}>
+    
+                        <Text style={styles.info}>Title :  {activity.title} </Text>
+                        <Text style={styles.info}>Status :  {activity.status} </Text>
+                        <Text style={styles.info}>Start Time :  {activity.startTime} </Text>
+    
+                    </Card>
+                </Pressable>
+            </>);
+        }
     }
     if (activityDetails.id === "") {
         return (
             <View style={styles.view}>
-                <FlatList data={activityList} renderItem={activitiesCard} />
+                <FlatList data={sortedArr} renderItem={activitiesCard} />
             </View>
         )
     } else {
@@ -64,6 +87,13 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: '#FCBA04',
         borderColor: '#B68602',
+        borderWidth: 5,
+        borderRadius: 10,
+        width: '100%',
+    },
+    cardCancelled: {
+        backgroundColor: '#BBBBBB',
+        borderColor: '#525252',
         borderWidth: 5,
         borderRadius: 10,
         width: '100%',

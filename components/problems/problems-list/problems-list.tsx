@@ -2,21 +2,24 @@ import { Card } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { View, Text, Pressable, ImageBackground, StyleSheet } from "react-native";
 import { dummyProblems } from '../../dummy-data/dummy';
+import { Problem } from '../../../dtos';
+import ProblemDetails from '../problems-details/problem-details'
 
 interface ProblemsProps {
-
+    problemDetails: Problem;
+    setProblemDetails:(problem: Problem)=> void;
+    problemList: Problem[];
 }
 
-export default function ProblemsList(props: ProblemsProps) {
+export default function ProblemsList({problemDetails, setProblemDetails, problemList}: ProblemsProps) {
 
-    function handleSeeMore() {
-
+    function handleSeeMore(problem: Problem) {
+        setProblemDetails(problem);
     }
-
 
     const problemsCard = (params: any) => {
         return (
-            <Pressable onPress={() => {}}>
+            <Pressable style={styles.pressableCard} onPress={() => { handleSeeMore(problemDetails); }}>
                 <Card containerStyle={styles.card}>
                     <View style={styles.infoReservationView}>
                         <Text style={styles.infoReservation}>
@@ -42,14 +45,17 @@ export default function ProblemsList(props: ProblemsProps) {
             </Pressable>
         )
     }
-
-    return (
-        <View style={styles.view}>
-            <View>
-                <FlatList data={dummyProblems} renderItem={problemsCard} />
+    if (problemDetails.id === "") {
+        return (
+            <View style={styles.view}>
+                <FlatList data={problemList} renderItem={problemsCard} />
             </View>
-        </View>
-    )
+        )
+    } else {
+        return (<>
+            <ProblemDetails problemDetails={problemDetails} setProblemDetails={setProblemDetails} />
+        </>)
+    }
 
 }
 
@@ -84,6 +90,11 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         padding: 10,
         borderRadius: 10,
+    },
+    pressableCard: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
     },
     insideCard: {
         flexDirection: 'row',

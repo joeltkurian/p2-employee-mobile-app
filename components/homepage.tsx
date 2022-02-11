@@ -5,7 +5,7 @@ import { borderColor, gold, hamburger, loginBtn, loginBtnActive, mainBackgroundC
 import { userContext } from "../userContext";
 import ActivitiesPage from "./activities/activities-page";
 import ClockInOut from "./clock-in-out";
-import ComplaintsPage from "./problems/problems-page";
+import ProblemsPage from "./problems/problems-page";
 import NavigationPanel from "./navigation-functions";
 import RoomService from "./room-service/room-service-component";
 
@@ -29,8 +29,8 @@ export default function HomePage() {
                         <ActivitiesPage /> :
                         currentPage === pages.room ?
                             <RoomService/> :
-                            currentPage === pages.complaints ?
-                                <ComplaintsPage /> : <Text>Something's wrong</Text>
+                            currentPage === pages.problems ?
+                                <ProblemsPage /> : <Text>Something's wrong</Text>
                 }
             </View>
             {Nav ?

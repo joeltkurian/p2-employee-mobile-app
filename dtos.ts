@@ -54,7 +54,7 @@ export interface WorkLog {
     timestamp: number
 }
 
-export const pages = { clock: 'Clock in/Out', activity: 'Activites', room: 'Room Services', complaints: 'complaints' };
+export const pages = { clock: 'Clock in/Out', activity: 'Activites', room: 'Room Services', problems: 'Problems' };
 export const defaultActivity: Activity =
 {
     id: "",
@@ -64,6 +64,15 @@ export const defaultActivity: Activity =
     endTime: NaN,
     location: "",
     status: "On Schedule"
+}
+
+export const defaultProblem: Problem =
+{
+    id: "",
+    submittedTime: 1200,
+    desc: "",
+    status: "Unreviewed",
+    photoLink: "",
 }
 
 interface LocationImage {
@@ -82,3 +91,5 @@ export const activityLocationBasedImages: LocationImage[] = [
 ]
 
 export const maxDescLength = 280;
+
+export const timeFormat = /^([0-1][0-9]|2[0-3])([0-5][0-9])$/;

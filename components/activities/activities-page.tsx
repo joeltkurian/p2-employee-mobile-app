@@ -5,7 +5,6 @@ import ActivitiesList from "./activity-functions/activity-list";
 import CreateActivity from "./activity-functions/create-activity";
 import { Activity, defaultActivity } from '../../dtos';
 import activityService from "../../service/activity-service";
-import { response } from "express";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllActivities } from "../../store/actions";
 import { AppState } from "../../store/store";
