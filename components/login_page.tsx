@@ -14,7 +14,7 @@ export default function Login(props: { setUser: Function }) {
     async function login() {
         if (account.username != '' && account.password != '') {
             let user: Employee = {
-                id: -1,
+                id: 2,
                 isManager: false,
                 fname: account.username,
                 lname: 'l',

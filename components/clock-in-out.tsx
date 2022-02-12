@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { useContext, useState } from "react";
+import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
+import { useContext, useEffect, useState } from "react";
 import { userContext } from "../userContext";
 import {
     borderColor,
@@ -8,10 +8,24 @@ import {
     paddingColor,
     textColor
 } from "../styling";
+import { MyWorkLog } from "../dtos";
 
 export default function ClockInOut() {
     const account = useContext(userContext);
     const [hoursPage, setHoursPage] = useState(false);
+    const [log,setLog] = useState<MyWorkLog[]>([]);
+    const [update,setUpdate] = useState<boolean>(false);
+
+    useEffect(()=>{
+        (async ()=>{
+            const response = await fetch(`http://20.121.74.219:3000/employees/${account.user.id}/worklogs`);
+            const logs:MyWorkLog[] = await response.json();
+            setLog(logs);
+            if(logs.length%2===0){
+                alert("Please remember to Clock in before beginning work!");
+            }
+        })();        
+    },[update])
 
     return (
         <>
@@ -23,8 +37,25 @@ export default function ClockInOut() {
                         },
                         [styles.clockBTN, { marginRight: 50 }]
                     ]}
+                    onPress={async ()=>{
+                        let workLog;
+                        if(log.length%2 === 0){
+                            workLog = {id:log.length, timestamp:Date.now(), employeeId:0, action:'CHECKIN'}
+                        }
+                        else{
+                            workLog = {id:log.length, timestamp:Date.now(), employeeId:0, action:'CHECKOUT'}
+                        }
+                        console.log(workLog);
+                        const response = await fetch(`http://20.121.74.219:3000/employees/${account.user.id}/worklogs`,{
+                            method:"POST",
+                            body:JSON.stringify(workLog),
+                            headers:{ 'content-type': 'application/json', 'Accept': 'application/json' }
+                        })
+                        const savedLog = await response.json();
+                        setUpdate(!update);
+                    }}
                 >
-                    <Text style={styles.clockBtnText}>Clock-in</Text>
+                    <Text style={styles.clockBtnText}>{log.length %2 === 0 ? "Clock-in" : "Clock-out"}</Text>
                 </Pressable>
 
                 <Pressable
@@ -41,13 +72,25 @@ export default function ClockInOut() {
                     <Text style={styles.clockBtnText}>Hours</Text>
                 </Pressable>
             </View>
-            {hoursPage ? <Hours /> : <></>}
+            {hoursPage ? <Hours hours={log}/> : <></>}
         </>
     );
 }
 
-export function Hours() {
-    return <View style={styles.hours}></View>;
+export function Hours(props:{hours:MyWorkLog[]}) {
+
+    function renderLog(log:MyWorkLog){
+        return(
+            <View style={{flexDirection:"row", backgroundColor:"#fff", justifyContent:"space-between"}}>
+                <Text>{log.timestamp}</Text>
+                <Text>{log.action}</Text>
+            </View>
+        )
+    }
+
+    return <View style={styles.hours}>
+        <FlatList data={props.hours} renderItem={({item}) => renderLog(item)} keyExtractor={item => item.id.toString()}/>
+    </View>;
 }
 
 const styles = StyleSheet.create({
