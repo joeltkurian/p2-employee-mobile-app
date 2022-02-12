@@ -14,6 +14,7 @@ export default function ClockInOut() {
     const account = useContext(userContext);
     const [hoursPage, setHoursPage] = useState(false);
     const [log,setLog] = useState<MyWorkLog[]>([]);
+    const [total,setTotal] = useState<MyWorkLog[]>([]);
     const [update,setUpdate] = useState<boolean>(false);
 
     useEffect(()=>{
@@ -24,7 +25,12 @@ export default function ClockInOut() {
             if(logs.length%2===0){
                 alert("Please remember to Clock in before beginning work!");
             }
-        })();        
+        })();
+        (async ()=>{
+            const response = await fetch(`http://20.121.74.219:3000/worklogs`);
+            const logs:MyWorkLog[] = await response.json();
+            setTotal(logs);
+        })();              
     },[update])
 
     return (
@@ -40,10 +46,10 @@ export default function ClockInOut() {
                     onPress={async ()=>{
                         let workLog;
                         if(log.length%2 === 0){
-                            workLog = {id:log.length, timestamp:Date.now(), employeeId:0, action:'CHECKIN'}
+                            workLog = {id:total.length, timestamp:Date.now(), employeeId:0, action:'CHECKIN'}
                         }
                         else{
-                            workLog = {id:log.length, timestamp:Date.now(), employeeId:0, action:'CHECKOUT'}
+                            workLog = {id:total.length, timestamp:Date.now(), employeeId:0, action:'CHECKOUT'}
                         }
                         console.log(workLog);
                         const response = await fetch(`http://20.121.74.219:3000/employees/${account.user.id}/worklogs`,{
