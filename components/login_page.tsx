@@ -22,6 +22,7 @@ export default function Login(props: { setUser: Function }) {
             dispatch(loginUser(user))
 
             await AsyncStorage.setItem("user", JSON.stringify(user));
+            await AsyncStorage.setItem("showAlert", "true");
             props.setUser(user);} catch(error) {
                 alert('Incorrect Username or Password');
             }
