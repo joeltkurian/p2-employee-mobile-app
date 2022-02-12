@@ -7,30 +7,27 @@ import {
     mainBackgroundColor, paddingColor, backgroundContinental,
     textColor, styleBackground
 } from "../styling";
+import loginService from "../service/login-service";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../store/actions";
 
 export default function Login(props: { setUser: Function }) {
     const [account, setAccount] = useState({ username: '', password: '' });
+    const dispatch = useDispatch();
 
     async function login() {
         if (account.username != '' && account.password != '') {
-            let user: Employee = {
-                id: -1,
-                isManager: false,
-                fname: account.username,
-                lname: 'l',
-                username: account.username,
-                password: account.password
-            }
-            //CHANGE TO PROPER LOGIC
-            if (account.username === 'manager') {
-                console.log('manager detected');
-                user.isManager = true;
-            }
+            
+            try{let user = await loginService.login(account.username, account.password)
+            dispatch(loginUser(user))
             await AsyncStorage.setItem("user", JSON.stringify(user));
-            props.setUser(user);
+            props.setUser(user);} catch(error) {
+                alert('Incorrect Username or Password');
+            }
+
 
         } else {
-            alert('Incorrect Username or Password');
+            alert('Enter Username and Password');
         }
     }
 

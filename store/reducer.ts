@@ -1,13 +1,22 @@
 import * as Actions from './actions'
 import { AppState } from './store'
-import { Activity, defaultActivity, Problem, defaultProblem } from '../dtos';
+import { Activity, defaultActivity, Problem, defaultProblem, Employee } from '../dtos';
 
 const initialState:AppState ={
     activities: [],
     activity: defaultActivity,
     problems: [],
     problem: defaultProblem,
+    employee: {
+        id: 0,
+        isManager: true,
+        fname: "",
+        lname: "",
+        username: "",
+        password: "",
+    },
 }
+
 
 const reducer = (
     state:AppState=initialState,
@@ -36,9 +45,13 @@ const reducer = (
             newState.problem=action.payload as Problem;
             return newState;   
 
+        case Actions.EmployeeActions.Login:
+            newState.employee=action.payload as Employee;
+            return newState;
+
         default: return state;
     
     }
 }
 
-export default reducer
+export default reducer;
