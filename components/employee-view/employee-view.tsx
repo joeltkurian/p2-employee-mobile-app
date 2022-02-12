@@ -1,7 +1,7 @@
 import { getArchtype } from "immer/dist/internal";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Employee, MyWorkLog } from "../../dtos";
+import { Employee } from "../../dtos";
 
 
 export default function EmployeeView() {
