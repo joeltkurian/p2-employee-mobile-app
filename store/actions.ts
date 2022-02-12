@@ -1,4 +1,4 @@
-import { Activity, Problem } from '../dtos';
+import { Activity, Employee, Problem } from '../dtos';
 
 export enum ActivityActions{
     GetAllActivities="GET_ALL_ACTIVITIES",
@@ -10,6 +10,10 @@ export enum ProblemActions{
     GetAllProblems="GET_ALL_PROBLEMS",
     GetProblem="GET_PROBLEM",
     UpdateProblem="UPDATE_PROBLEM",
+}
+
+export enum EmployeeActions{
+    Login="LOGIN",
 }
 
 export interface AppAction{
@@ -25,6 +29,19 @@ export interface ActivityAction extends AppAction{
 export interface ProblemAction extends AppAction{
     type: ProblemActions;
     payload: Problem | Problem[];
+}
+
+export interface EmployeeAction extends AppAction{
+    type: EmployeeActions;
+    payload: Employee;
+}
+
+export function loginUser(employee:Employee):EmployeeAction{
+    const action:EmployeeAction={
+        type:EmployeeActions.Login,
+        payload:employee,
+    }
+    return action;
 }
 
 export function getAllActivities(activities:Activity[]):ActivityAction{

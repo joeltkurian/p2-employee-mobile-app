@@ -11,22 +11,22 @@ class ProblemService {
     getAllProblems(): Promise<Problem[]> {
         return axios
             .get(this.URI)
-            .then(result => result.data)
-            .catch(error => { console.log(error) });
+                .then(result => result.data)
+                    .catch(error => { console.log(error) });
     }
 
     getProblemById(problemId: Problem): Promise<Problem> {
         return axios
             .get(this.URI + `${problemId}`)
-            .then(result => result.data)
-            .catch(error => { console.log(error) });
+                .then(result => result.data)
+                    .catch(error => { console.log(error) });
     }
 
     reviewProblem(problemId: string): Promise<Problem> {
         return axios
             .patch(this.URI + `${problemId}`)
-            .then(result => result.data)
-            .catch(error => { console.log(error) });
+                .then(result => result.data)
+                    .catch(error => { console.log(error) });
     }
 }
 

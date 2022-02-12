@@ -1,5 +1,5 @@
 import { createStore } from '@reduxjs/toolkit';
-import { Activity, Problem} from '../dtos';
+import { Activity, Employee, Problem} from '../dtos';
 import reducer from './reducer';
 
 export interface ActivityState{
@@ -12,7 +12,11 @@ export interface ProblemState{
     problem: Problem;
 }
 
-export interface AppState extends ActivityState, ProblemState{
+export interface EmployeeState{
+    employee: Employee;
+}
+
+export interface AppState extends ActivityState, ProblemState, EmployeeState{
 
 }
 
