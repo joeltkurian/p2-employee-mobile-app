@@ -20,6 +20,7 @@ export default function Login(props: { setUser: Function }) {
             
             try{let user = await loginService.login(account.username, account.password)
             dispatch(loginUser(user))
+
             await AsyncStorage.setItem("user", JSON.stringify(user));
             props.setUser(user);} catch(error) {
                 alert('Incorrect Username or Password');
