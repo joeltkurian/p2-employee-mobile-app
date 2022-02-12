@@ -54,7 +54,7 @@ export default function EmployeeView() {
             }
             i--;
         }
-        console.log(`ID: ${emp.id} | Status: ${status}`)
+        
         return status;
     }
 
