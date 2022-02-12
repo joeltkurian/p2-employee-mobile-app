@@ -49,9 +49,16 @@ export interface Employee {
 }
 
 export interface WorkLog {
-    wId: number,
+    id: number,
     type: "CHEKIN" | "CHECKOUT",
     timestamp: number
+}
+
+export interface MyWorkLog {
+    id:number,
+    timestamp:Date,
+    employeeId:number,
+    action:'CHECKIN' | 'CHECKOUT'
 }
 
 export const pages = { clock: 'Clock in/Out', activity: 'Activites', room: 'Room Services', problems: 'Problems' };

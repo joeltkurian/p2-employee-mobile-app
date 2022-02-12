@@ -12,7 +12,7 @@ export default function App() {
   const [user, setUser] = useState<Employee>(account);
 
   useEffect(() => {
-    AsyncStorage.getItem('user').then(json => {
+    AsyncStorage.getItem('use').then(json => {
       if (json) {
         setUser(JSON.parse(json));
       }
