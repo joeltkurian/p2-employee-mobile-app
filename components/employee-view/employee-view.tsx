@@ -42,7 +42,7 @@ export default function EmployeeView() {
     }
 
     function getStatus(emp:Employee){
-        let status = 'ABSENT'
+        let status = 'Absent'
         let b:Boolean = true;
         let i = workLogs.length-1;
         while(b && i >= 0){
@@ -54,6 +54,9 @@ export default function EmployeeView() {
             }
             i--;
         }
+
+        if(status === "CHECKIN") status = "Checked In"
+        if(status === "CHECKOUT") status = "Checked Out"
         
         return status;
     }
@@ -71,13 +74,16 @@ export default function EmployeeView() {
                     <View style={styles.item}>
                         <Text style={styles.text}>{item.fname} {item.lname}</Text>
                         <Text/>
-                        {getStatus(item) === "ABSENT" ? 
-                            <Text style={{textAlign: 'justify', color: 'red'}}>Status: {getStatus(item)}</Text>
-                        : getStatus(item) === "CHECKIN" ? 
-                            <Text style={{textAlign: 'justify', color: 'green'}}>Status: {getStatus(item)}</Text>
-                            : <Text style={{textAlign: 'justify', color: 'blue'}}>Status: {getStatus(item)}</Text>
+
+                            <View style={{alignItems:'center'}}>
+                            {getStatus(item) === "Absent" ? 
+                                <Text style={{textAlign: 'justify', color: 'red'}}>Status: {getStatus(item)}</Text>
+                            : getStatus(item) === "Checked In" ? 
+                                <Text style={{textAlign: 'justify', color: 'green'}}>Status: {getStatus(item)}</Text>
+                                : <Text style={{textAlign: 'justify', color: 'blue'}}>Status: {getStatus(item)}</Text>
                         
-                        }
+                            }
+                        </View>
                         
                     </View>
                 </View>
@@ -97,7 +103,7 @@ container: {
 },
 flatlist: {
     paddingHorizontal: 10,
-    backgroundColor: 'rgba(106, 176, 7, .3)', 
+    backgroundColor: '#074bb04c', //hehehe i knew you'd change me but i'm far too powerful watch here i go HHHHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AND THIS IS TO GO EVEN FURTHER BEYOND HYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     height:120
 },
 item: {
