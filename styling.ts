@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const hamburger = { uri: 'https://specialspectacleimg.blob.core.windows.net/continentalimgs/hamburgerIcon.png' };
+export const hamburger = { uri: 'https://specialspectacleimg.blob.core.windows.net/continentalimgs/hamburgerNav.gif' };
 export const gold = { uri: 'https://specialspectacleimg.blob.core.windows.net/continentalimgs/gold.jpg' };
 export const backgroundContinental = { uri: "https://specialspectacleimg.blob.core.windows.net/continentalimgs/backgroundContinental.jpg" };
 export const styleBackground = StyleSheet.create({
