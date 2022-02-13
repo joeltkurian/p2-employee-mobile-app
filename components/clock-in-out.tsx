@@ -6,9 +6,11 @@ import {
     loginBtn,
     loginBtnActive,
     paddingColor,
-    textColor
+    textColor,
+    mainBackgroundColor
 } from "../styling";
 import { MyWorkLog } from "../dtos";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ClockInOut() {
     const account = useContext(userContext);
@@ -23,7 +25,17 @@ export default function ClockInOut() {
             const logs:MyWorkLog[] = await response.json();
             setLog(logs);
             if(logs.length%2===0){
-                alert("Please remember to Clock in before beginning work!");
+                const showMessage = await AsyncStorage.getItem("showAlert")
+                if(showMessage === "true"){
+                    alert("Please remember to Clock in before beginning work!");
+                    await AsyncStorage.setItem("showAlert","false");
+                }
+            }
+            else{
+                const showMessage = await AsyncStorage.getItem("showAlert")
+                if(showMessage === "true"){
+                    await AsyncStorage.setItem("showAlert","false");
+                }
             }
         })();
         (async ()=>{
@@ -86,9 +98,10 @@ export default function ClockInOut() {
 export function Hours(props:{hours:MyWorkLog[]}) {
 
     function renderLog(log:MyWorkLog){
+        const date = new Date(log.timestamp);
         return(
-            <View style={{flexDirection:"row", backgroundColor:"#fff", justifyContent:"space-between"}}>
-                <Text>{log.timestamp}</Text>
+            <View style={styles.hourRecord}>
+                <Text>{`${date.toDateString()} ${date.toLocaleTimeString()}`}</Text>
                 <Text>{log.action}</Text>
             </View>
         )
@@ -139,5 +152,17 @@ const styles = StyleSheet.create({
         color: textColor,
         fontWeight: "bold",
         fontSize: 25
+    },
+    hourRecord: {
+        backgroundColor: mainBackgroundColor,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: borderColor,
+        padding: 5,
+        fontSize: 20,
+        alignItems: 'center',
+        flexDirection: "row",
+        marginBottom: 10,
+        justifyContent:"space-between"
     }
 });
