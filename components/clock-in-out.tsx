@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
 import { useContext, useEffect, useState } from "react";
-import { userContext } from "../userContext";
+import { userContext, clockContext } from "../userContext";
 import {
     borderColor,
     loginBtn,
@@ -14,36 +14,39 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ClockInOut() {
     const account = useContext(userContext);
+    const clock = useContext(clockContext);
     const [hoursPage, setHoursPage] = useState(false);
-    const [log,setLog] = useState<MyWorkLog[]>([]);
-    const [total,setTotal] = useState<MyWorkLog[]>([]);
-    const [update,setUpdate] = useState<boolean>(false);
+    const [log, setLog] = useState<MyWorkLog[]>([]);
+    const [total, setTotal] = useState<MyWorkLog[]>([]);
+    const [update, setUpdate] = useState<boolean>(false);
 
-    useEffect(()=>{
-        (async ()=>{
+
+    useEffect(() => {
+        (async () => {
             const response = await fetch(`http://20.121.74.219:3000/employees/${account.user.id}/worklogs`);
-            const logs:MyWorkLog[] = await response.json();
+            const logs: MyWorkLog[] = await response.json();
             setLog(logs);
-            if(logs.length%2===0){
+            clock.setClockedIn(log.length % 2 === 0 ? true : false);
+            if (logs.length % 2 === 0) {
                 const showMessage = await AsyncStorage.getItem("showAlert")
-                if(showMessage === "true"){
+                if (showMessage === "true") {
                     alert("Please remember to Clock in before beginning work!");
-                    await AsyncStorage.setItem("showAlert","false");
+                    await AsyncStorage.setItem("showAlert", "false");
                 }
             }
-            else{
+            else {
                 const showMessage = await AsyncStorage.getItem("showAlert")
-                if(showMessage === "true"){
-                    await AsyncStorage.setItem("showAlert","false");
+                if (showMessage === "true") {
+                    await AsyncStorage.setItem("showAlert", "false");
                 }
             }
         })();
-        (async ()=>{
+        (async () => {
             const response = await fetch(`http://20.121.74.219:3000/worklogs`);
-            const logs:MyWorkLog[] = await response.json();
+            const logs: MyWorkLog[] = await response.json();
             setTotal(logs);
-        })();              
-    },[update])
+        })();
+    }, [update])
 
     return (
         <>
@@ -55,25 +58,25 @@ export default function ClockInOut() {
                         },
                         [styles.clockBTN, { marginRight: 50 }]
                     ]}
-                    onPress={async ()=>{
+                    onPress={async () => {
                         let workLog;
-                        if(log.length%2 === 0){
-                            workLog = {id:total.length, timestamp:Date.now(), employeeId:0, action:'CHECKIN'}
+                        if (log.length % 2 === 0) {
+                            workLog = { id: total.length, timestamp: Date.now(), employeeId: 0, action: 'CHECKIN' }
                         }
-                        else{
-                            workLog = {id:total.length, timestamp:Date.now(), employeeId:0, action:'CHECKOUT'}
+                        else {
+                            workLog = { id: total.length, timestamp: Date.now(), employeeId: 0, action: 'CHECKOUT' }
                         }
                         console.log(workLog);
-                        const response = await fetch(`http://20.121.74.219:3000/employees/${account.user.id}/worklogs`,{
-                            method:"POST",
-                            body:JSON.stringify(workLog),
-                            headers:{ 'content-type': 'application/json', 'Accept': 'application/json' }
+                        const response = await fetch(`http://20.121.74.219:3000/employees/${account.user.id}/worklogs`, {
+                            method: "POST",
+                            body: JSON.stringify(workLog),
+                            headers: { 'content-type': 'application/json', 'Accept': 'application/json' }
                         })
                         const savedLog = await response.json();
                         setUpdate(!update);
                     }}
                 >
-                    <Text style={styles.clockBtnText}>{log.length %2 === 0 ? "Clock-in" : "Clock-out"}</Text>
+                    <Text style={styles.clockBtnText}>{log.length % 2 === 0 ? "Clock-in" : "Clock-out"}</Text>
                 </Pressable>
 
                 <Pressable
@@ -90,16 +93,16 @@ export default function ClockInOut() {
                     <Text style={styles.clockBtnText}>Hours</Text>
                 </Pressable>
             </View>
-            {hoursPage ? <Hours hours={log}/> : <></>}
+            {hoursPage ? <Hours hours={log} /> : <></>}
         </>
     );
 }
 
-export function Hours(props:{hours:MyWorkLog[]}) {
+export function Hours(props: { hours: MyWorkLog[] }) {
 
-    function renderLog(log:MyWorkLog){
+    function renderLog(log: MyWorkLog) {
         const date = new Date(log.timestamp);
-        return(
+        return (
             <View style={styles.hourRecord}>
                 <Text>{`${date.toDateString()} ${date.toLocaleTimeString()}`}</Text>
                 <Text>{log.action}</Text>
@@ -108,7 +111,7 @@ export function Hours(props:{hours:MyWorkLog[]}) {
     }
 
     return <View style={styles.hours}>
-        <FlatList data={props.hours} renderItem={({item}) => renderLog(item)} keyExtractor={item => item.id.toString()}/>
+        <FlatList data={props.hours} renderItem={({ item }) => renderLog(item)} keyExtractor={item => item.id.toString()} />
     </View>;
 }
 
@@ -163,6 +166,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: "row",
         marginBottom: 10,
-        justifyContent:"space-between"
+        justifyContent: "space-between"
     }
 });

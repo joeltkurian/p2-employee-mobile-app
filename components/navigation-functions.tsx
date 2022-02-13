@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from "react";
-import { userContext } from "../userContext";
+import { userContext, clockContext } from "../userContext";
 import { Animated, View, StyleSheet, Text, Pressable } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Employee, pages } from "../dtos";
@@ -12,7 +12,9 @@ export default function NavigationPanel(props: { setNav: Function, Nav: boolean,
     const translation = useRef(new Animated.Value(-200)).current;
     const fade = useRef(new Animated.Value(0)).current;
     const account = useContext(userContext);
+    const clock = useContext(clockContext);
     const setAccount = account.setUser;
+    console.log(clock.clockedIn ? 'true' : 'false');
     function openNav() {
         props.setNav(props.Nav ? false : true);
     }
@@ -52,10 +54,12 @@ export default function NavigationPanel(props: { setNav: Function, Nav: boolean,
                         <ChoosePage name={pages.problems} setPage={props.setPage} setNav={props.setNav} />
                         <ChoosePage name={pages.employeeview} setPage={props.setPage} setNav={props.setNav} />
                     </> :
-                    <>
-                        <ChoosePage name={pages.room} setPage={props.setPage} setNav={props.setNav} />
-                        <ChoosePage name={pages.activity} setPage={props.setPage} setNav={props.setNav} />
-                    </>
+                    clock.clockedIn ?
+                        <>
+                            <ChoosePage name={pages.room} setPage={props.setPage} setNav={props.setNav} />
+                            <ChoosePage name={pages.activity} setPage={props.setPage} setNav={props.setNav} />
+                        </> : <></>
+
             }
 
             {/* -------------------------------------------------------------------------------------------------------------------------- */}

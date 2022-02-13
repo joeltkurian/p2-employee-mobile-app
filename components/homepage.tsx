@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { View, ImageBackground, StyleSheet, Text, Pressable } from "react-native"
 import { pages } from "../dtos";
 import { borderColor, gold, hamburger, loginBtn, loginBtnActive, mainBackgroundColor, styleBackground } from "../styling";
-import { userContext } from "../userContext";
+import { userContext, clockContext } from "../userContext";
 import ActivitiesPage from "./activities/activities-page";
 import ClockInOut from "./clock-in-out";
 import ProblemsPage from "./problems/problems-page";
@@ -13,45 +13,48 @@ import EmployeeView from "./employee-view/employee-view";
 export default function HomePage() {
     const account = useContext(userContext);
     const user = account.user;
+    const [clockedIn, setClockedIn] = useState(false);
     const [Nav, setNav] = useState(false);
     const [currentPage, setCurrentPage] = useState(pages.clock);
     function openNav() {
         setNav(Nav ? false : true);
     }
     return (<ImageBackground source={gold} style={styleBackground.image}>
-        <View style={styles.border}>
-            <View style={styles.welcome}>
-                <Text style={styles.welcomeText}>Welcome {account.user.fname}</Text>
-            </View>
-            <View style={styles.pages}>
-                {currentPage === pages.clock ?
-                    <ClockInOut /> :
-                    currentPage === pages.activity ?
-                        <ActivitiesPage /> :
-                        currentPage === pages.room ?
-                            <RoomService /> :
-                            currentPage === pages.problems ?
-                                <ProblemsPage /> :
-                                currentPage === pages.employeeview ?
-                                    <EmployeeView /> : <Text>SOMETHING WENT WRONG</Text>
+        <clockContext.Provider value={{ clockedIn: clockedIn, setClockedIn: setClockedIn }}>
+            <View style={styles.border}>
+                <View style={styles.welcome}>
+                    <Text style={styles.welcomeText}>Welcome {account.user.fname}</Text>
+                </View>
+                <View style={styles.pages}>
+                    {currentPage === pages.clock ?
+                        <ClockInOut /> :
+                        currentPage === pages.activity ?
+                            <ActivitiesPage /> :
+                            currentPage === pages.room ?
+                                <RoomService /> :
+                                currentPage === pages.problems ?
+                                    <ProblemsPage /> :
+                                    currentPage === pages.employeeview ?
+                                        <EmployeeView /> : <Text>SOMETHING WENT WRONG</Text>
+                    }
+                </View>
+
+                {Nav ?
+                    <NavigationPanel setNav={setNav} Nav={Nav} setPage={setCurrentPage} account={user} />
+                    :
+                    <Pressable onPress={openNav}
+                        style={({ pressed }) => [
+                            {
+                                backgroundColor: pressed
+                                    ? loginBtnActive
+                                    : loginBtn
+                            },
+                            styles.NavBTN
+                        ]}>
+                        <ImageBackground source={hamburger} style={styles.ham} />
+                    </Pressable >
                 }
-            </View>
-            {Nav ?
-                <NavigationPanel setNav={setNav} Nav={Nav} setPage={setCurrentPage} account={user} />
-                :
-                <Pressable onPress={openNav}
-                    style={({ pressed }) => [
-                        {
-                            backgroundColor: pressed
-                                ? loginBtnActive
-                                : loginBtn
-                        },
-                        styles.NavBTN
-                    ]}>
-                    <ImageBackground source={hamburger} style={styles.ham} />
-                </Pressable >
-            }
-        </View>
+            </View></clockContext.Provider>
     </ImageBackground >);
 }
 

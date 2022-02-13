@@ -16,6 +16,8 @@ function does(s: any) {
 
 export const userContext = createContext({ user: account, setUser: does });
 
+export const clockContext = createContext({ clockedIn: false, setClockedIn: does });
+
 
 export function formatted_date(date: number) {
     var result = "";
