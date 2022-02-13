@@ -1,8 +1,6 @@
 import { Card } from 'react-native-elements';
 import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
-import { dummyData } from '../../dummy-data/dummy'
-import { useState } from 'react';
-import { Activity, defaultActivity } from '../../../dtos';
+import { Activity } from '../../../dtos';
 import ActivityDetails from './activity-details';
 
 interface ActivityProps {

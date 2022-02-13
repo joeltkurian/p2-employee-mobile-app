@@ -26,7 +26,7 @@ export default function ClockInOut() {
             const response = await fetch(`http://20.121.74.219:3000/employees/${account.user.id}/worklogs`);
             const logs: MyWorkLog[] = await response.json();
             setLog(logs);
-            clock.setClockedIn(log.length % 2 === 0 ? true : false);
+            clock.setClockedIn(log.length % 2 === 0 ? false : true);
             if (logs.length % 2 === 0) {
                 const showMessage = await AsyncStorage.getItem("showAlert")
                 if (showMessage === "true") {
@@ -46,7 +46,7 @@ export default function ClockInOut() {
             const logs: MyWorkLog[] = await response.json();
             setTotal(logs);
         })();
-    }, [update])
+    }, [update, clock])
 
     return (
         <>
@@ -62,9 +62,11 @@ export default function ClockInOut() {
                         let workLog;
                         if (log.length % 2 === 0) {
                             workLog = { id: total.length, timestamp: Date.now(), employeeId: 0, action: 'CHECKIN' }
+                            clock.setClockedIn(true);
                         }
                         else {
                             workLog = { id: total.length, timestamp: Date.now(), employeeId: 0, action: 'CHECKOUT' }
+                            clock.setClockedIn(false);
                         }
                         console.log(workLog);
                         const response = await fetch(`http://20.121.74.219:3000/employees/${account.user.id}/worklogs`, {

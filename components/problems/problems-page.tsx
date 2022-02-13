@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import { borderColor, loginBtn, loginBtnActive, paddingColor, textColor } from "../../styling";
+import { useEffect } from "react";
+import { View, StyleSheet } from "react-native";
+import { borderColor, paddingColor } from "../../styling";
 import ProblemsList from "./problems-list/problems-list";
-import { Problem, defaultProblem } from '../../dtos';
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProblems } from "../../store/actions";
 import { AppState } from "../../store/store";

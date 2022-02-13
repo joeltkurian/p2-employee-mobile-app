@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
-import { ServiceRequest, Offering, Offerings } from "../../dtos";
+import { ServiceRequest, Offering, Offerings, returnNewService } from "../../dtos";
 import { borderColor, loginBtn, loginBtnActive, mainBackgroundColor, textColor } from "../../styling";
 
 export default function RoomService() {
@@ -13,11 +13,11 @@ export default function RoomService() {
         if (request.status === "Ordered") {
             for (let i = 0; i < serviceRequests.length; i++) {
                 if (temp[i].id === request.id) {
-                    const action = {status:"Processing"}
-                    const response = await fetch('http://20.121.74.219:3000/servicerequests/'+request.id,{
-                        method:"PATCH",
-                        body:JSON.stringify(action),
-                        headers:{
+                    const action = { status: "Processing" }
+                    const response = await fetch('http://20.121.74.219:3000/servicerequests/' + request.id, {
+                        method: "PATCH",
+                        body: JSON.stringify(action),
+                        headers: {
                             'content-type': 'application/json',
                             'Accept': 'application/json'
                         }
@@ -29,30 +29,31 @@ export default function RoomService() {
         else if (request.status === "Processing") {
             for (let i = 0; i < serviceRequests.length; i++) {
                 if (temp[i].id === request.id) {
-                    const action = {status:"Completed"}
-                    const response = await fetch('http://20.121.74.219:3000/servicerequests/'+request.id,{
-                        method:"PATCH",
-                        body:JSON.stringify(action),
-                        headers:{
+                    const action = { status: "Completed" }
+                    const response = await fetch('http://20.121.74.219:3000/servicerequests/' + request.id, {
+                        method: "PATCH",
+                        body: JSON.stringify(action),
+                        headers: {
                             'content-type': 'application/json',
                             'Accept': 'application/json'
                         }
-                    })                    
+                    })
                 }
             }
             setupdateBtn(!updateBtn);
         }
-        else{
+        else {
             alert("Something went wrong");
         }
     }
 
     useEffect(() => {
-        (async()=>{
+        (async () => {
             const response = await fetch('http://20.121.74.219:3000/servicerequests');
-            const fullList:ServiceRequest[] = await response.json();
+            const fullList: ServiceRequest[] = await response.json();
             const openRequests = filterAndSort(fullList)
-            setServiceRequests(openRequests);})();
+            setServiceRequests(openRequests);
+        })();
     }, [updateBtn]);
 
 
@@ -178,11 +179,12 @@ export function RendarContent(props: { section: ServiceRequest }) {
     const { section } = props;
     const cart = convert(section.requestedOfferings);
     function renderItem(props: { offering: Offering, quantity: number }) {
-        const [title, desc] = props.offering.desc.split('*');
+        const title = returnNewService(props.offering.desc).desc;
+
         return (
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                 <Text>{title}</Text>
-                <Text>x{props.quantity}     ${(props.offering.cost * props.quantity).toFixed(2)}</Text>
+                <Text> x{props.quantity}     ${(props.offering.cost * props.quantity).toFixed(2)}</Text>
             </View>
         )
     }

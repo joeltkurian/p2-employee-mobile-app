@@ -56,10 +56,10 @@ export interface WorkLog {
 
 
 export interface MyWorkLog {
-    id:number,
-    timestamp:Date,
-    employeeId:number,
-    action:'CHECKIN' | 'CHECKOUT'
+    id: number,
+    timestamp: Date,
+    employeeId: number,
+    action: 'CHECKIN' | 'CHECKOUT'
 }
 
 export const pages = { clock: 'Clock in/Out', activity: 'Activites', room: 'Room Services', problems: 'Problems', employeeview: 'Available Employees' };
@@ -102,3 +102,25 @@ export const activityLocationBasedImages: LocationImage[] = [
 export const maxDescLength = 280;
 
 export const timeFormat = /^([0-1][0-9]|2[0-3])([0-5][0-9])$/;
+
+
+export interface ContinentalOffering {
+    desc: "Tool Delivery" | "Attire Delivery" | "Clean-up Crew" | "Food Delivery" | "Guest Pickup";
+    link: string;
+}
+
+const serviceCont = { toolDelivery: 'Lobster Bisque', clothDelivery: 'Crem Brule', cleanupCrew: 'Beef Wellington', foodDelivery: 'Hamburger', guestPickup: '' }
+
+export function returnNewService(name: string): ContinentalOffering {
+    if (name === serviceCont.toolDelivery)
+        return { desc: "Tool Delivery", link: 'https://specialspectacleimg.blob.core.windows.net/continentalimgs/tool-delivery.jpg' };
+    else if (name === serviceCont.clothDelivery)
+        return { desc: "Attire Delivery", link: 'https://specialspectacleimg.blob.core.windows.net/continentalimgs/cloth-delivery.jpg' };
+    else if (name === serviceCont.cleanupCrew)
+        return { desc: "Clean-up Crew", link: 'https://specialspectacleimg.blob.core.windows.net/continentalimgs/clean-up-crew.png' };
+    else if (name === serviceCont.foodDelivery)
+        return { desc: "Food Delivery", link: 'https://specialspectacleimg.blob.core.windows.net/continentalimgs/food-delivery.jpg' };
+    else (name === serviceCont.guestPickup)
+    return { desc: "Guest Pickup", link: 'https://specialspectacleimg.blob.core.windows.net/continentalimgs/guest-pickup.jpg' };
+}
+
